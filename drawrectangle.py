@@ -37,5 +37,7 @@ def make_label(image_path):
         ind += 1
     new_dataframe.to_csv(label_path)
 
+
+
 for img_path in img_paths[:]:
     make_label(image_path=img_path)

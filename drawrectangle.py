@@ -11,6 +11,9 @@ import pandas as pd
 img_paths = sorted(glob.glob(os.path.join("./val2017", "*.png")))
 from_label_path = "rec-val"
 save_path = "./label-val"
+os.makedirs(save_path, exist_ok=True)
+
+
 def make_label(image_path):
     image = cv2.imread(image_path)
     #simage = cv2.resize(image, (600, 600))
@@ -25,7 +28,7 @@ def make_label(image_path):
     for ind in range(len(rectangle_dataframe)):
         _, x0, y0, x1, y1 = rectangle_dataframe.iloc[ind]
         copyimg = copy.deepcopy(image)
-        show_img = cv2.rectangle(copyimg,(x0,y0),(x1, y1),(0,255,0),1)
+        show_img = cv2.rectangle(copyimg,(x0,y0),(x1, y1),(0,255,0),10)
         show_img = cv2.cvtColor(show_img,cv2.COLOR_BGR2RGB)
         plt.imshow(show_img)
         plt.show()
@@ -34,10 +37,10 @@ def make_label(image_path):
             continue
         record = [class_name, x0, y0, x1-x0 ,y1-y0]  
         new_dataframe.loc[ind] = record
-        ind += 1
+        
     new_dataframe.to_csv(label_path)
 
 
 
-for img_path in img_paths[:]:
+for img_path in img_paths:
     make_label(image_path=img_path)

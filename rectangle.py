@@ -6,12 +6,12 @@ import glob
 import copy
 import pandas as pd
 
-#　矩形をマウスにより描画する
+#　矩形をマウスにより描画する Dotraining 環境
 ind = 0
-path = sorted(glob.glob(os.path.join("./val2017", "*.png")))
-#img_path = "GX010100_00000.jpg"
+path = sorted(glob.glob(os.path.join("./train2017", "*.png")))
+os.makedirs("./rec-train", exist_ok=True)
+
 def make_label(img_path):
-    
     drawing = False
     ix,iy = -1,-1
     cols = ["x0", "y0", "x1", "y1"]
@@ -40,7 +40,7 @@ def make_label(img_path):
             dataframe.loc[ind] = record
             ind += 1
             
-            cv2.rectangle(img,(ix,iy),(x,y),(0,255,0),1)
+            cv2.rectangle(img,(ix,iy),(x,y),(0,255,0),10)
             # cv2.rectangle(img,(ix,iy),(x,y),(0,255,0),-1)
 
 
@@ -59,13 +59,13 @@ def make_label(img_path):
 
 
 
-for img_path in path:
+for i in range(len(path)):
+    img_path = path[i]
     labelname = os.path.basename(img_path).split(".")[0] + ".csv"
     print(labelname)
     dataframe = make_label(img_path)
-    file_path = os.path.join("./rec-val", labelname)
+    file_path = os.path.join("./rec-train", labelname)
     dataframe.to_csv(file_path)
-    
     ind = 0
     
 

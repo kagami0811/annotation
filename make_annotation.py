@@ -7,6 +7,9 @@ from collections import OrderedDict
 from PIL import Image
 import pandas as pd
 
+os.makedirs("./annotations", exist_ok=True)
+
+#annotation json 形式に変更
 def make_images(image_path,image_id):
     file_name = os.path.basename(image_path)
     image = OrderedDict()
@@ -53,7 +56,7 @@ if __name__  == "__main__":
     annotations = []
     images = []
 
-    obj_dict ={"rrrr":1, "yyyy":2, "bbbb":3, "ryry":4, "byby":5, "brbr":6, "byrr":7, "bbrr":8, "yybb":9, "yyrr":10, "rbyy":11, "yrbb":12}
+    obj_dict ={"t":1}
 
     train_image_parent_path = "./val2017"
     train_label_parent_path = "./label-val"   

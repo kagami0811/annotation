@@ -7,8 +7,9 @@ from collections import OrderedDict
 from PIL import Image
 import pandas as pd
 
-os.makedirs("./annotations", exist_ok=True)
+mode = "val"
 
+os.makedirs("./annotations", exist_ok=True)
 #annotation json 形式に変更
 def make_images(image_path,image_id):
     file_name = os.path.basename(image_path)
@@ -56,10 +57,10 @@ if __name__  == "__main__":
     annotations = []
     images = []
 
-    obj_dict ={"t":1}
+    obj_dict ={"t":1, "eye":2, "nose":3, "tail":4, "front":5, "back": 6, "ear":7}
 
-    train_image_parent_path = "./val2017"
-    train_label_parent_path = "./label-val"   
+    train_image_parent_path = f"./{mode}2017"
+    train_label_parent_path = f"./label-{mode}"   
 
     train_images_path = sorted(glob.glob(os.path.join(train_image_parent_path, "*.png")))
     train_labels_path = sorted(glob.glob(os.path.join(train_label_parent_path, "*.csv")))
@@ -93,7 +94,7 @@ if __name__  == "__main__":
     json_dict ["categories"] = category_list
     print(json_dict)
     #jsonファイル
-    filename = os.path.join("./annotations","instances_val.json")
+    filename = os.path.join("./annotations",f"instances_{mode}.json")
     with open(filename, "w") as f:
         
         json.dump(json_dict, f, ensure_ascii=False)

@@ -8,9 +8,9 @@ import copy
 import pandas as pd
 ##rectangle　矩形を表示し、クラス名を入力する
 
-img_paths = sorted(glob.glob(os.path.join("./val2017", "*.png")))
-from_label_path = "rec-val"
-save_path = "./label-val"
+img_paths = sorted(glob.glob(os.path.join("./train2017", "*.png")))
+from_label_path = "rec-train"
+save_path = "./label-train"
 os.makedirs(save_path, exist_ok=True)
 
 
@@ -29,10 +29,14 @@ def make_label(image_path):
         _, x0, y0, x1, y1 = rectangle_dataframe.iloc[ind]
         copyimg = copy.deepcopy(image)
         show_img = cv2.rectangle(copyimg,(x0,y0),(x1, y1),(0,255,0),10)
-        show_img = cv2.cvtColor(show_img,cv2.COLOR_BGR2RGB)
-        plt.imshow(show_img)
-        plt.show()
-        class_name = input()
+        #show_img = cv2.cvtColor(show_img,cv2.COLOR_BGR2RGB)
+        #plt.imshow(show_img)
+        #plt.show()
+        cv2.namedWindow('my_drawing',cv2.WINDOW_NORMAL )
+        cv2.imshow('my_drawing',show_img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()    
+        class_name = input()    
         if class_name == "":
             continue
         record = [class_name, x0, y0, x1-x0 ,y1-y0]  
@@ -41,6 +45,7 @@ def make_label(image_path):
     new_dataframe.to_csv(label_path)
 
 
+resume = glob.glob(os.path.join(save_path, "*.csv"))
 
-for img_path in img_paths:
+for img_path in img_paths[len(resume):]:
     make_label(image_path=img_path)

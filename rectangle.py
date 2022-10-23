@@ -8,8 +8,9 @@ import pandas as pd
 
 #　矩形をマウスにより描画する Dotraining 環境
 ind = 0
-path = sorted(glob.glob(os.path.join("./train2017", "*.png")))
-os.makedirs("./rec-train", exist_ok=True)
+mode = "val"
+path = sorted(glob.glob(os.path.join(f"./{mode}2017", "*.png")))
+os.makedirs(f"./rec-{mode}", exist_ok=True)
 
 def make_label(img_path):
     drawing = False
@@ -64,7 +65,7 @@ for i in range(len(path)):
     labelname = os.path.basename(img_path).split(".")[0] + ".csv"
     print(labelname)
     dataframe = make_label(img_path)
-    file_path = os.path.join("./rec-train", labelname)
+    file_path = os.path.join(f"./rec-{mode}", labelname)
     dataframe.to_csv(file_path)
     ind = 0
     

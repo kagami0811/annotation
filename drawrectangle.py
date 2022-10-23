@@ -7,10 +7,10 @@ import glob
 import copy
 import pandas as pd
 ##rectangle　矩形を表示し、クラス名を入力する
-
-img_paths = sorted(glob.glob(os.path.join("./train2017", "*.png")))
-from_label_path = "rec-train"
-save_path = "./label-train"
+mode = "val"
+img_paths = sorted(glob.glob(os.path.join(f"./{mode}2017", "*.png")))
+from_label_path = f"rec-{mode}"
+save_path = f"./label-{mode}"
 os.makedirs(save_path, exist_ok=True)
 
 
